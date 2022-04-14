@@ -38,6 +38,7 @@ class CustomerGenerator:
                     "last_name": self.sex_dict[self.sex]['last_name'](),
                     "patronymic": self.sex_dict[self.sex]['middle_name'](),
                     "sex": self.sex,
+                    "email": self.fake.email(),
                     "phone_number": self.fake.phone_number(),
                     "country": self.fake.country_code(),
                     "balance": self.fake.pydecimal(min_value=0, max_value=200_000, right_digits=2)
