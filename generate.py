@@ -2,14 +2,31 @@ from CustomerGenerator.CustomerGenerator import CustomerGenerator
 from DealerGenerator.DealerGenerator import DealerGenerator
 from SupplierGenerator.SupplierGenerator import SupplierGenerator
 from CarGenerator.CarGenerator import CarGenerator
+from AdGenerator.AdGenerator import DealerAdGenerator, SupplierAdGenerator
+from GarageGenerator.GarageGenerator import DealerGarageGenerator, SupplierGarageGenerator
+import json
 
 
 cg = CustomerGenerator()
-print(cg.generate(10, "F"))
-print(cg.generate(5, "M"))
 dg = DealerGenerator()
-print(dg.generate(20))
 sg = SupplierGenerator()
-print(sg.generate(5))
 carg = CarGenerator()
-print(carg.generate(1))
+dadg = DealerAdGenerator()
+sadg = SupplierAdGenerator()
+dgg = DealerGarageGenerator()
+sgg = SupplierGarageGenerator()
+
+data = []
+data.extend(cg.generate(150, "M"))
+data.extend(cg.generate(50, "F"))
+data.extend(dg.generate(100))
+data.extend(sg.generate(100))
+data.extend(carg.generate(150))
+data.extend(dadg.generate(50))
+data.extend(sadg.generate(50))
+data.extend(dgg.generate(25, 90))
+data.extend(sgg.generate(30, 70))
+
+
+with open('data.json', 'w', encoding='utf8') as json_file:
+    json.dump(data, json_file)
