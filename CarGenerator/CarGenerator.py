@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 from random import randint
 from faker_vehicle import VehicleProvider
@@ -9,10 +10,13 @@ class CarGenerator:
     def __init__(self):
         self.fake = Faker('ru-RU')
         self.fake.add_provider(VehicleProvider)
-        self.transmission = ["Manual", "Automatic"]
+        self.transmission = ["m", "a"]
         self.transmission_weights = [0.4, 0.6]
-        self.tod = ["Front", "Rear", "Full"]
+        self.tod = ["front", "rear", "full"]
         self.tod_weights = [0.15, 0.75, 0.1]
+        self.colors = ['yellow', 'green', 'black', 'fuksia', 'white', 'gray', 'lime', 'blue',
+                       'brown', 'silver', 'olive', 'purple', 'teal']
+        self.type = ['wagon', 'sedan', 'convertible', 'van/minivan', 'hatchback', 'suv', 'coupe', 'pickup']
 
     def generate(self, amount=10):
         cars = []
@@ -30,13 +34,12 @@ class CarGenerator:
                         "brand": car['Make'],
                         "model": car['Model'],
                         "year": car['Year'],
-                        "description": {
-                            "type": car['Category'],
-                            "mass": randint(800, 1600),
-                            "transmission": np.random.choice(self.transmission, p=self.transmission_weights),
-                            "Type of drive": np.random.choice(self.tod, p=self.tod_weights),
-                            "Fuel tank capacity": randint(45, 100)
-                        }
+                        "color": np.random.choice(self.colors),
+                        "type": re.split(r' |,', car['Category'])[0],
+                        "mass": randint(800, 1600),
+                        "transmission": np.random.choice(self.transmission, p=self.transmission_weights),
+                        "tod": np.random.choice(self.tod, p=self.tod_weights),
+                        "fuel_tank_capacity": randint(45, 100)
                     }
                 }
             )

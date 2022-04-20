@@ -5,6 +5,7 @@ from CarGenerator.CarGenerator import CarGenerator
 from AdGenerator.AdGenerator import DealerAdGenerator, SupplierAdGenerator
 from GarageGenerator.GarageGenerator import DealerGarageGenerator, SupplierGarageGenerator
 import json
+import re
 
 
 cg = CustomerGenerator()
@@ -27,6 +28,7 @@ data.extend(sadg.generate(50))
 data.extend(dgg.generate(25, 90))
 data.extend(sgg.generate(30, 70))
 
-
 with open('data.json', 'w', encoding='utf8') as json_file:
     json.dump(data, json_file)
+
+

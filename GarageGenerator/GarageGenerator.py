@@ -6,6 +6,7 @@ from faker import Faker
 class DealerGarageGenerator:
     def __init__(self):
         self.fake = Faker('ru-RU')
+        self.pk = 1
 
     def generate(self, car_amount=25, dealers_amount=10):
         garages = []
@@ -25,7 +26,7 @@ class DealerGarageGenerator:
                 garages.append(
                     {
                         "model": "Utility.dealergarage",
-                        "pk": i + 1,
+                        "pk": self.pk,
                         "fields": {
                             "created_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                             "updated_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
@@ -37,12 +38,14 @@ class DealerGarageGenerator:
                         }
                     }
                 )
+                self.pk += 1
         return garages
 
 
 class SupplierGarageGenerator:
     def __init__(self):
         self.fake = Faker('ru-RU')
+        self.pk = 1
 
     def generate(self, car_amount=25, suppliers_amount=10):
         garages = []
@@ -74,4 +77,5 @@ class SupplierGarageGenerator:
                         }
                     }
                 )
+                self.pk += 1
         return garages
