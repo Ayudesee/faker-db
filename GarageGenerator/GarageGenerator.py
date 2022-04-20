@@ -33,6 +33,7 @@ class DealerGarageGenerator:
                             "dealer_id": d_int,
                             "car_id": cars[-1],
                             "amount": self.fake.pyint(min_value=1, max_value=25),
+                            "car_price": str(self.fake.pydecimal(min_value=6_000, max_value=50_000, right_digits=2))
                         }
                     }
                 )
@@ -69,6 +70,7 @@ class SupplierGarageGenerator:
                             "supplier_id": s_int,
                             "car_id": self.fake.pyint(min_value=1, max_value=100),
                             "amount": self.fake.pyint(min_value=100, max_value=525),
+                            "car_price": str(self.fake.pydecimal(min_value=6_000, max_value=50_000, right_digits=2))
                         }
                     }
                 )

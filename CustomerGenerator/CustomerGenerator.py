@@ -38,7 +38,7 @@ class CustomerGenerator:
                         "is_active": self.fake.boolean(90),
                         "first_name": self.sex_dict[self.sex]['first_name'](),
                         "last_name": self.sex_dict[self.sex]['last_name'](),
-                        "patronymic": self.sex_dict[self.sex]['middle_name'](),
+                        "middle_name": self.sex_dict[self.sex]['middle_name'](),
                         "sex": self.sex,
                         "email": self.fake.email(),
                         "phone_number": self.fake.phone_number(),
