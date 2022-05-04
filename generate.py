@@ -4,10 +4,12 @@ from SupplierGenerator.SupplierGenerator import SupplierGenerator
 from CarGenerator.CarGenerator import CarGenerator
 from AdGenerator.AdGenerator import DealerAdGenerator, SupplierAdGenerator
 from GarageGenerator.GarageGenerator import DealerGarageGenerator, SupplierGarageGenerator
+from UserGenerator.UserGenerator import LoginUserGenerator
+from random import choice
 import json
 import re
 
-
+ug = LoginUserGenerator()
 cg = CustomerGenerator()
 dg = DealerGenerator()
 sg = SupplierGenerator()
@@ -18,17 +20,47 @@ dgg = DealerGarageGenerator()
 sgg = SupplierGarageGenerator()
 
 data = []
-data.extend(cg.generate(150, "M"))
-data.extend(cg.generate(50, "F"))
-data.extend(dg.generate(100))
-data.extend(sg.generate(100))
-data.extend(carg.generate(150))
-data.extend(dadg.generate(50))
-data.extend(sadg.generate(50))
-data.extend(dgg.generate(25, 90))
-data.extend(sgg.generate(30, 70))
 
-with open('data.json', 'w', encoding='utf8') as json_file:
+
+users = ug.generate(1000)
+customers = []
+dealers = []
+suppliers = []
+
+for user in users:
+    if user['fields']['user_type'] == "C":
+        if user['pk'] % 2 == 0:
+            customers.extend(cg.generate(user_id=user['pk'], amount=1, gender="M"))
+        else:
+            customers.extend(cg.generate(user_id=user['pk'], amount=1, gender="F"))
+    elif user['fields']['user_type'] == "D":
+        dealers.extend(dg.generate(user_id=user['pk'], amount=1))
+    elif user['fields']['user_type'] == "S":
+        suppliers.extend(sg.generate(user_id=user['pk'], amount=1))
+
+d_gars = []
+d_ads = []
+s_gars = []
+s_ads = []
+for dealer in dealers:
+    d_gars.extend(dgg.generate(25, dealer['pk'], 1))
+    d_ads.extend(dadg.generate(dealer_id=dealer['pk'], ads_amount=10))
+for supplier in suppliers:
+    s_gars.extend(sgg.generate(25, supplier['pk'], 1))
+    s_ads.extend(sadg.generate(supplier_id=supplier['pk'], dealer_id=choice(dealers)['pk'], ads_amount=5))
+
+
+data.extend(users)
+data.extend(customers)
+data.extend(dealers)
+data.extend(suppliers)
+data.extend(carg.generate(100))
+data.extend(d_gars)
+data.extend(s_gars)
+data.extend(d_ads)
+data.extend(s_ads)
+
+with open('data45.json', 'w', encoding='utf8') as json_file:
     json.dump(data, json_file)
 
 

@@ -8,10 +8,10 @@ class DealerGarageGenerator:
         self.fake = Faker('ru-RU')
         self.pk = 1
 
-    def generate(self, car_amount=25, dealers_amount=10):
+    def generate(self, car_amount=25, dealer_id=None, amount=10):
         garages = []
         dealers = []
-        for dealer in range(dealers_amount):
+        for dealer in range(amount):
             cars = []
             d_int = self.fake.pyint(min_value=1, max_value=100)
             while d_int in dealers:
@@ -31,7 +31,7 @@ class DealerGarageGenerator:
                             "created_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                             "updated_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                             "is_active": self.fake.boolean(95),
-                            "dealer_id": d_int,
+                            "dealer_id": dealer_id if dealer_id else d_int,
                             "car_id": cars[-1],
                             "amount": self.fake.pyint(min_value=1, max_value=25),
                             "car_price": str(self.fake.pydecimal(min_value=6_000, max_value=50_000, right_digits=2))
@@ -47,10 +47,10 @@ class SupplierGarageGenerator:
         self.fake = Faker('ru-RU')
         self.pk = 1
 
-    def generate(self, car_amount=25, suppliers_amount=10):
+    def generate(self, car_amount=25, supplier_id=None, amount=10):
         garages = []
         suppliers = []
-        for dealer in range(suppliers_amount):
+        for dealer in range(amount):
             cars = []
             s_int = self.fake.pyint(min_value=1, max_value=100)
             while s_int in suppliers:
@@ -65,12 +65,12 @@ class SupplierGarageGenerator:
                 garages.append(
                     {
                         "model": "Utility.suppliergarage",
-                        "pk": i + 1,
+                        "pk": self.pk,
                         "fields": {
                             "created_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                             "updated_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                             "is_active": self.fake.boolean(95),
-                            "supplier_id": s_int,
+                            "supplier_id": supplier_id if supplier_id else s_int,
                             "car_id": self.fake.pyint(min_value=1, max_value=100),
                             "amount": self.fake.pyint(min_value=100, max_value=525),
                             "car_price": str(self.fake.pydecimal(min_value=6_000, max_value=50_000, right_digits=2))

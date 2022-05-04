@@ -8,14 +8,14 @@ class SupplierGenerator:
     def __init__(self):
         self.fake = Faker('ru-RU')
 
-    def generate(self, amount=10):
+    def generate(self, user_id=None, amount=10):
         suppliers = []
         for i in range(amount):
             time = self.fake.date_time_between(start_date=datetime(2022, 1, 1, 1, 0, 1))
             suppliers.append(
                 {
                     "model": "Supplier.supplier",
-                    "pk": i + 1,
+                    "pk": user_id if user_id else i + 1,
                     "fields": {
                         "created_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                         "updated_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",

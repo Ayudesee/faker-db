@@ -4,10 +4,10 @@ from faker import Faker
 
 
 class CustomerGenerator:
-    def __init__(self, sex="M"):
-        self.sex = sex
+    def __init__(self, gender="M"):
+        self.gender = gender
         self.fake = Faker('ru-RU')
-        self.sex_dict = {
+        self.gender_dict = {
             "M": {
                 "first_name": self.fake.first_name_male,
                 "last_name": self.fake.last_name_male,
@@ -21,9 +21,9 @@ class CustomerGenerator:
         }
         self.pk = 1
 
-    def generate(self, amount=10, sex=None):
-        if sex:
-            self.sex = sex
+    def generate(self, user_id=None, amount=10, gender=None):
+        if gender:
+            self.gender = gender
 
         customers = []
         for i in range(amount):
@@ -31,16 +31,16 @@ class CustomerGenerator:
             customers.append(
                 {
                     "model": "Customer.customer",
-                    "pk": self.pk,
+                    "pk": user_id if user_id else self.pk,
                     "fields": {
                         "created_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                         "updated_at": f"{time.year}-{time.month}-{time.day}T{time.hour}:{time.minute}:{time.second}.123Z",
                         "is_active": self.fake.boolean(90),
-                        "first_name": self.sex_dict[self.sex]['first_name'](),
-                        "last_name": self.sex_dict[self.sex]['last_name'](),
-                        "middle_name": self.sex_dict[self.sex]['middle_name'](),
-                        "sex": self.sex,
-                        "email": self.fake.email(),
+                        "first_name": self.gender_dict[self.gender]['first_name'](),
+                        "last_name": self.gender_dict[self.gender]['last_name'](),
+                        "middle_name": self.gender_dict[self.gender]['middle_name'](),
+                        "gender": self.gender,
+                        # "email": self.fake.email(),
                         "phone_number": self.fake.phone_number(),
                         "country": self.fake.country_code(),
                         "balance": str(self.fake.pydecimal(min_value=0, max_value=200_000, right_digits=2))
